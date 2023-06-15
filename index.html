@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>SunLightScorpion - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-color: #111111;
+            transition: background-color 0.7s ease;
+        }
+
+        .button {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: none;
+            background-color: #282c2e; /* Mond-Farbe */
+            color: white; /* Textfarbe für Mond */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: fixed;
+            bottom: 0;
+            margin-bottom: 10px;
+            float: right;
+            margin-left: 10px;
+        }
+
+        .button.sun {
+            background-color: white; /* Sonne-Farbe */
+            color: black; /* Textfarbe für Sonne */
+        }
+   nav {
+          position: fixed;
+  width: 100%;
+  height: 100px;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: #1C1E21;
+        }
+        
+        nav.scrolled {
+          background: rgba(17, 17, 17, 0.9);
+        }
+        
+        nav ul {
+          float: right;
+          list-style: none;
+          padding: 25px;
+          margin: 0; 
+        }
+        
+        nav li {
+          float: left;
+        }
+
+        h1, h2, h3, h4, h5,
+        .h1, .h2, .h3, .h4, .h5 {
+          font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; 
+        }
+
+        nav a {
+          font-size: 1.4em;
+          color: white;
+          text-decoration: none;
+          margin: 5px 0 0 30px;
+          display: block;
+          font-family: Nunito;
+        }
+        
+        footer {
+width: 100%;
+height: 200px;
+background: #202124;
+}
+}
+
+    </style>
+</head>
+<body>
+<nav>
+      <img src="imgs/logo.png" border=0 alt="Logo" title="Logo" width="50px" height="50px" style="margin-left: 50px; margin-top: 30px; float: left; position: fixed" href="index.html"/>
+      
+        <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#dev">Developer Bereich</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    
+    <a href="./login/" style="color: blue; text-decoration: none; margin: 3px 0 0 40px; margin-left: 30px; float: right"><span class="material-symbols-rounded" style="font-size: 30px">person</span></a>
+	</ul>
+  </nav>
+  
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+    <button id="toggleButton" class="button"><span class="material-symbols-outlined">dark_mode</span></button>
+
+    <script>
+        function setCookie(name, value) {
+            document.cookie = name + "=" + value + "; path=/";
+        }
+
+        function getCookie(name) {
+            var cookies = document.cookie.split("; ");
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return "";
+        }
+
+        function toggleButton() {
+            var button = document.getElementById("toggleButton");
+            if (button.disabled) {
+                return;
+            }
+
+            button.disabled = true;
+            setTimeout(function () {
+                button.disabled = false;
+            }, 1000);
+
+            var currentClass = button.classList.contains("sun") ? "sun" : "moon";
+            var newClass = currentClass === "sun" ? "moon" : "sun";
+            button.classList.remove(currentClass);
+            button.classList.add(newClass);
+            button.innerHTML = newClass === "sun" ? '<span class="material-symbols-outlined">dark_mode</span>' : '<span class="material-symbols-outlined">light_mode</span>';
+
+            var body = document.body;
+            var currentBackgroundColor = getComputedStyle(body).getPropertyValue("background-color");
+            var newBackgroundColor = currentBackgroundColor === "rgb(17, 17, 17)" ? "rgb(255, 255, 255)": "rgb(17, 17, 17)";
+
+            body.style.backgroundColor = newBackgroundColor;
+
+            setCookie("buttonState", newClass);
+            setCookie("backgroundColor", newBackgroundColor);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var button = document.getElementById("toggleButton");
+            button.addEventListener("click", toggleButton);
+
+            var savedButtonState = getCookie("buttonState");
+            var savedBackgroundColor = getCookie("backgroundColor");
+
+            if (savedButtonState !== "") {
+                button.classList.add(savedButtonState);
+                button.innerHTML = savedButtonState === "sun" ? '<span class="material-symbols-outlined">dark_mode</span>' : '<span class="material-symbols-outlined">light_mode</span>';
+            }
+
+            if (savedBackgroundColor !== "") {
+                document.body.style.backgroundColor = savedBackgroundColor;
+            }
+        });
+    </script>
+</body>
+  <footer>
+  <br>
+  <p style="text-align: center; color: white; font-size: 20px; padding: 8px">
+  <a  href="https://puthere.your.facebook.de"><i class="fa fa-facebook"></i></a>
+  <a  href="https://puthere.your.twitter.de"><i class="fa fa-twitter"></i></a>
+  <a  href="https://puthere.your.instagram.de"><i class="fa fa-instagram"></i></a>
+  </p>
+  <br>
+  <p style="text-align: center; font-family: Nunito; font-size: 15px; c		olor: white">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This homepage is made with &#9829; by xMaxelx</p>
+  </footer>
+</html>
